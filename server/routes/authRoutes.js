@@ -1,4 +1,5 @@
 const passport = require("passport");
+const keys = require("../config/keys.js");
 
 module.exports = app => {
   app.get(
@@ -8,15 +9,18 @@ module.exports = app => {
     })
   );
 
-  app.get("/auth/google/callback", passport.authenticate("google"));
-
-  app.get("/", (req, res) => {
-    res.send("root test");
-  });
+  app.get(
+    "/auth/google/callback", 
+    passport.authenticate("google"),
+    (req, res) => {
+      // use :3000 on dev || null on prod
+      res.redirect(keys.host || null + '/surveys');
+    }
+  );
 
   app.get("/api/logout", (req, res) => {
     req.logout(); //passport erases req.session
-    res.send(req.user);
+    res.redirect("/");
   });
 
   app.get("/api/current_user", (req, res) => {

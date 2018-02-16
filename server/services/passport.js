@@ -22,23 +22,20 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback"
+      callbackURL: keys.googleAuthURL
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       // console.log("access token:", accessToken + "\n");
       // console.log("refresh token:", refreshToken + "\n");
       // console.log("profile-id:", profile.id);
       // console.log("done:", done);
-      User.findOne({ googleID: profile.id }).then(existingUser => {
-        if (existingUser) {
-          // model instance of found user
-          done(null, existingUser); // no error!, here is user
-        } else {
-          new User({ googleID: profile.id }) // model instance (represents Document)
-            .save() // save it to MongoDB (create Document)
-            .then(user => done(null, user)); // make sure user created (with promise)
-        }
-      });
+      const existingUser = await User.findOne({ googleID: profile.id });
+      if (existingUser) {
+        done(null, existingUser); // no error!, here is user
+      } else {
+        const newUser = await new User({ googleID: profile.id }).save(); 
+        done(null, newUser); 
+      }
     }
   )
 );
