@@ -14,7 +14,7 @@ module.exports = app => {
     passport.authenticate("google"),
     (req, res) => {
       // use :3000 on dev || null on prod
-      res.redirect(keys.host || null + '/surveys');
+      res.redirect(keys.host + '/surveys');
     }
   );
 
