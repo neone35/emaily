@@ -11,25 +11,26 @@ class Header extends Component {
         return;
       case false:
         return <li>
-            <a href="/auth/google">
-              Log in
+          <a href="/auth/google">
+            Log in
             </a>
-          </li>;
+        </li>;
       default:
-        return [<li key="3" style={{margin: '0 10px'}}>
-            Credits: {this.props.auth.credits}
-          </li>,<li key="1">
-            <StripeWrapper />
-          </li>, <li key="2">
-            <a href="/api/logout">Logout</a>
-          </li> ];
+        return [<li key="3" style={{ margin: '0 10px' }}>
+          Credits: {this.props.auth.credits}
+        </li>, <li key="1">
+          <StripeWrapper />
+        </li>, <li key="2">
+          <a href="/api/logout">Logout</a>
+        </li>];
     }
   }
 
   render() {
-    return <nav>
+    return (
+      <nav>
         <div className="nav-wrapper">
-          <Link to={this.props.auth ? '/surveys' : '/'} 
+          <Link to={this.props.auth ? '/surveys' : '/'}
             className="brand-logo left">
             Emaily
           </Link>
@@ -37,7 +38,8 @@ class Header extends Component {
             {this.renderContent()}
           </ul>
         </div>
-      </nav>;
+      </nav>
+    );
   }
 }
 
