@@ -11,7 +11,6 @@ require("./services/passport");
 
 mongoose.connect(keys.mongoURI, {
   useMongoClient: true
-  /* other options */
 });
 
 app.use(bodyParser.json());
