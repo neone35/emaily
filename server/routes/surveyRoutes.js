@@ -83,7 +83,11 @@ module.exports = app => {
     });
 
     app.get('/api/surveys', requireLogin, async (req, res) => {
-        const surveys = await Survey.find({ _user: req.user.id });
+        // const surveys = await Survey.find({ _user: req.user.id }); // getting surveys with a lot of recipients
+        const surveys = await Survey.find({ _user: req.user.id })
+            .select({ 
+                recipients: false
+             });
         res.send(surveys);
     });
 };

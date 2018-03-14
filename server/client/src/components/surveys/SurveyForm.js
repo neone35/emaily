@@ -10,7 +10,6 @@ import FIELDS from './formFields';
 
 class SurveyForm extends Component {
 
-    
     renderFields() {
         // lodash function to apply key=value pairs
         return _.map(FIELDS, ({ label, name }) => {
